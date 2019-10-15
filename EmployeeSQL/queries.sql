@@ -25,17 +25,52 @@ D.dept_no=DM.dept_no
 LEFT JOIN employees as E ON
 E.emp_no=DM.emp_no;
 
--- Create query to get employyees by department --
+-- Create query to get employees by department --
 
 SELECT D.dept_name as "Department Name", 
 	DE.emp_no as "Employee Number", E.last_name as "Last Name",
 	E.first_name as "First Name"
 FROM department as D
-LEFT JOIN dept_emp as DE ON
+INNER JOIN dept_emp as DE ON
 D.dept_no=DE.dept_no
-LEFT JOIN employees as E ON
+INNER JOIN employees as E ON
 E.emp_no=DE.emp_no
 ORDER BY D.dept_name;
 
-/* Create query to find employyees named Hercules and last name 
-starts with */
+/* Create query to find employees named Hercules and last name 
+starts with B*/
+
+SELECT *
+FROM employees
+WHERE employees.first_name = 'Hercules'
+AND employees.last_name like 'B%';
+
+/* Create a query for employees of Sales department */
+
+SELECT DE.emp_no as "Employee Number", E.last_name as "Last Name",
+	E.first_name as "First Name", D.dept_name as "Department Name"
+FROM department as D
+INNER JOIN dept_emp as DE ON
+D.dept_no=DE.dept_no
+INNER JOIN employees as E ON
+E.emp_no=DE.emp_no
+WHERE D.dept_name = 'Sales';
+
+/* Create a query for employees of Sales and Development department */
+
+SELECT DE.emp_no as "Employee Number", E.last_name as "Last Name",
+	E.first_name as "First Name", D.dept_name as "Department Name"
+FROM department as D
+INNER JOIN dept_emp as DE ON
+D.dept_no=DE.dept_no
+INNER JOIN employees as E ON
+E.emp_no=DE.emp_no
+WHERE D.dept_name = 'Sales' OR D.dept_name = 'Development'
+ORDER BY dept_name;
+
+/* Create a query count of employee last names in descending order*/
+
+SELECT COUNT(last_name) AS "Total Last Name", last_name AS "Last Name"
+FROM employees
+GROUP BY last_name
+ORDER BY COUNT(last_name) DESC;
